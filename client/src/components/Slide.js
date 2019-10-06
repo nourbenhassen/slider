@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Form from './Form'
+import ProgressBar from './ProgressBar'
 import { ArrowWrapper, Button } from "./styles"
 import { ReactComponent as Arrow } from "../assets/arrow.svg"
 
@@ -24,7 +25,7 @@ export function Slide(props) {
   }
   return (
     <div>
-      {/* <Stepper /> */}
+      <ProgressBar />
       <ArrowWrapper onClick={() => prevStep()} visible={ position !== 1 }>
         <Arrow />
       </ArrowWrapper>
