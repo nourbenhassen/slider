@@ -18,29 +18,6 @@ class App extends React.Component {
       })
   }
 
-  let 
-  /*
-        <ErrorBoundary>
-  { data ?
-
-          <BrowserRouter>
-            <div className="container">
-
-                  <Route exact path="/" component={Slide} />  
-                  <Route exact path="/submit" component={Submit} /> 
-            </div>
-          </BrowserRouter> 
-
-  :<div>Loading...</div>
-  }
-  </ErrorBoundary>
-
-
-                   
-
-
-  */
-
 
   render() {
     const { data } = this.state
@@ -71,7 +48,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-//render <Slide status> <Slide age> <Slide salary>
-
-//error boundary ==> évite page blanche ou msg d'erreur dégueu - en prod très important (dans la doc de React)

@@ -12,6 +12,7 @@ export function Slide(props) {
     "age": null,
     "salaire": null
   })
+  const [progress, setProgress] = useState(0)
   // calculer dynamiquement ?
   const lastPosition = 3;
 
@@ -20,12 +21,14 @@ export function Slide(props) {
       setPosition(position - 1)
   }
   const nextStep = () => {
-    if (position < lastPosition)
+    if (position < lastPosition) { 
       setPosition(position + 1)
+      setProgress(progress + 25)
+    }
   }
   return (
     <div>
-      <ProgressBar />
+      <ProgressBar  percentage={progress}/>
       <ArrowWrapper onClick={() => prevStep()} visible={ position !== 1 }>
         <Arrow />
       </ArrowWrapper>
