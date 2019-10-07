@@ -23,7 +23,7 @@ export function Slide(props) {
       setProgress(progress - 45)
   }
   const nextStep = () => {
-    if (position < lastPosition) { 
+    if (position < lastPosition && ((position ===1 && data.status) || (position ===2 && data.age || position ===3 && data.salaire))) { 
       setPosition(position + 1)
       setProgress(progress + 45)
     }
