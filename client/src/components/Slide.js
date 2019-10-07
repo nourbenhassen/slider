@@ -13,6 +13,7 @@ export function Slide(props) {
     "salaire": null
   })
   const [progress, setProgress] = useState(0)
+  const [error, setError] = useState ("")
 
   // calculer dynamiquement ?
   const lastPosition = 3;
@@ -26,7 +27,9 @@ export function Slide(props) {
     if (position < lastPosition && ((position ===1 && data.status) || (position ===2 && data.age || position ===3 && data.salaire))) { 
       setPosition(position + 1)
       setProgress(progress + 45)
+      setError("")
     }
+    else setError("Please enter a value to the form")
   }
   return (
     <div>
@@ -52,6 +55,9 @@ export function Slide(props) {
       <ArrowWrapper reversed={true} onClick={() => nextStep()}  visible={ position !== lastPosition }>
         <Arrow />
       </ArrowWrapper>
+
+      {error && <p className="error">{error}</p>}
+
       <Button onClick={() => console.log(data)} visible={ position === lastPosition }>Submit</Button>
     </div>
   );

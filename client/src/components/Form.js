@@ -23,7 +23,8 @@ export function Form(props) {
                         name={props.form.type === "select" ? "select-group" : undefined}
                         type={props.form.type === "select" ? getSelectType() : "number"}
                         min={props.form.type === "input" ? (props.form.option.min || 0) : undefined}
-                        max={props.form.type === "input" ? props.form.option.max : undefined}/>
+                        max={props.form.type === "input" ? props.form.option.max : undefined}
+                        />
                 </label>
             )}
         </div>)
