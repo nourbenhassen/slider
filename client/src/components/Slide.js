@@ -29,7 +29,7 @@ export function Slide(props) {
       setProgress(progress + 45)
       setError("")
     }
-    else setError("Please enter a value to the form")
+    else setError("Champ obligatoire")
   }
   return (
     <div>
