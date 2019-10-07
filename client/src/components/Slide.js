@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from './Form'
 import ProgressBar from './ProgressBar'
-import { ArrowWrapper, Button } from "./styles"
+import { ArrowWrapper, Button, Tracker, ProgressInTracker } from "./styles"
 import { ReactComponent as Arrow } from "../assets/arrow.svg"
 
 export function Slide(props) {
@@ -13,22 +13,34 @@ export function Slide(props) {
     "salaire": null
   })
   const [progress, setProgress] = useState(0)
+
   // calculer dynamiquement ?
   const lastPosition = 3;
 
   const prevStep = () => {
     if (position > 1)
       setPosition(position - 1)
+      setProgress(progress - 45)
   }
   const nextStep = () => {
     if (position < lastPosition) { 
       setPosition(position + 1)
-      setProgress(progress + 25)
+      setProgress(progress + 45)
     }
   }
   return (
     <div>
-      <ProgressBar  percentage={progress}/>
+      <div>
+            <ul style={{ listStyle: "none", width: "50%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                    <li>Status</li>
+                    <li>Age</li>
+                    <li>Revenu</li>
+            </ul>
+            <Tracker>
+                <ProgressInTracker percentage={progress}/>
+            </Tracker>
+      </div>
+            
       <ArrowWrapper onClick={() => prevStep()} visible={ position !== 1 }>
         <Arrow />
       </ArrowWrapper>

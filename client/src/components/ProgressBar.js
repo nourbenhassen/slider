@@ -2,7 +2,7 @@ import React from "react"
 import { Tracker, ProgressInTracker } from "./styles"
 
 export function ProgressBar(props) {
-    
+
     return (
         <div>
             <ul style={{ listStyle: "none", width: "50%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
