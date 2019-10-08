@@ -14,9 +14,9 @@ export function Form(props) {
     }
     return (
         <div>
-            <h4>{props.form.label}</h4>
+            <h4>{props.form.type === "select" ? props.form.label : props.form.data[0].label}</h4>
             {props.form.data.map((input, key) =>
-                <label key={key}>{input.label}
+                <label key={key}>{props.form.type === "select" && input.label}
                     <input value={props.form.type === "select" ? input.value : typeof props.data[props.step] === "number" && props.data[props.step]}
                         checked={props.form.type === "select" && props.data[props.step] === input.value ? true : undefined}
                         onChange={onChange}

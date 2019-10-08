@@ -43,22 +43,25 @@ export function Slide(props) {
                 <ProgressInTracker percentage={progress}/>
             </Tracker>
       </div>
-            
+      <div style= {{display: "flex", flexDirection: "row"}}>
       <ArrowWrapper onClick={() => prevStep()} visible={ position !== 1 }>
         <Arrow />
       </ArrowWrapper>
+      
       <Form
         form={survey[Object.keys(survey).find(key => survey[key].position === position)]}
         step={Object.keys(survey).find(key => survey[key].position === position)}
         data={data}
         setData={setData} /> 
+
       <ArrowWrapper reversed={true} onClick={() => nextStep()}  visible={ position !== lastPosition }>
         <Arrow />
       </ArrowWrapper>
 
-      {error && <p className="error">{error}</p>}
+      {error && <p style = {{color: "red"}} className="error">{error}</p>}
 
       <Button onClick={() => console.log(data)} visible={ position === lastPosition }>Submit</Button>
+    </div>
     </div>
   );
 }
