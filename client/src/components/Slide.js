@@ -1,33 +1,34 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import Submit from "./Submit";
-
 import Form from "./Form";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./progress-bar/ProgressBar";
 import {
+  SlideWrapper,
+  Arrow,
   ArrowWrapper,
+  ArrowContainer,
+  ButtonWrap,
   Button,
-  Tracker,
-  ProgressInTracker,
-  StepList,
+  Error,
 } from "./styles";
-import { ReactComponent as Arrow } from "../assets/arrow.svg";
 import { AppContext } from "../App";
 
 export function Slide(props) {
   const { survey } = props;
   const [position, setPosition] = useState(1);
+  const [valid, setValid] = useState(false);
   const data = useContext(AppContext);
 
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
 
+  //Arrow color change
+  const isValueValid = isValueValid => {
+    setValid(isValueValid);
+  };
   // calculer dynamiquement ?
   const lastPosition = 3;
 
   const prevStep = () => {
     if (position > 1) setPosition(position - 1);
-    setProgress(progress - 45);
   };
   const nextStep = () => {
     if (
@@ -35,29 +36,27 @@ export function Slide(props) {
       ((position === 1 && data.status) || (position === 2 && data.age))
     ) {
       setPosition(position + 1);
-      setProgress(progress + 45);
+      setValid(false);
       setError("");
     } else setError("Champ obligatoire");
   };
 
-  return (
-    <div>
-      <div>
-        <StepList>
-          <li>Status</li>
-          <li>Age</li>
-          <li>Revenu</li>
-        </StepList>
-        <Tracker>
-          <ProgressInTracker percentage={progress} />
-        </Tracker>
-      </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <ArrowWrapper onClick={() => prevStep()} visible={position !== 1}>
-          <Arrow />
-        </ArrowWrapper>
+  const stepsName = [];
+  for (let [key, question] of Object.entries(survey)) {
+    stepsName[question.position - 1] = key;
+  }
 
+  return (
+    <>
+      <ProgressBar position={position} stepsName={stepsName} />
+      <SlideWrapper>
+        <ArrowContainer>
+          <ArrowWrapper onClick={() => prevStep()} visible={position !== 1}>
+            <Arrow style={{ width: 20 }} />
+          </ArrowWrapper>
+        </ArrowContainer>
         <Form
+          isValueValid={isValueValid}
           ref={form => (this.myForm = form)}
           form={
             survey[
@@ -67,22 +66,21 @@ export function Slide(props) {
           step={Object.keys(survey).find(
             key => survey[key].position === position,
           )}
+          error={error}
+          setError={setError}
         />
-
-        <ArrowWrapper
-          reversed={true}
-          onClick={() => nextStep()}
-          visible={position !== lastPosition}
-        >
-          <Arrow />
-        </ArrowWrapper>
-
-        {error && (
-          <p style={{ color: "red" }} className="error">
-            {error}
-          </p>
-        )}
-
+        <ArrowContainer>
+          <ArrowWrapper
+            reversed={true}
+            onClick={() => nextStep()}
+            visible={position !== lastPosition}
+            valid={valid}
+          >
+            <Arrow style={{ width: 20 }} />
+          </ArrowWrapper>
+        </ArrowContainer>
+      </SlideWrapper>
+      <ButtonWrap>
         <Button
           to="/submit"
           visible={position === lastPosition}
@@ -90,8 +88,8 @@ export function Slide(props) {
         >
           Submit
         </Button>
-      </div>
-    </div>
+      </ButtonWrap>
+    </>
   );
 }
 

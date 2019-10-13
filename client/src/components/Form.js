@@ -1,64 +1,80 @@
 import React, { useContext } from "react";
 import { AppContext } from "../App";
-import { InputText } from "./form/InputText";
+import { InputValue } from "./form/InputValue";
 import { Select } from "./form/Select";
-import { SurveyList, SurveyElement } from "./styles";
+import {
+  SurveyList,
+  SurveyElement,
+  FormWrapper,
+  ValidateSelect,
+  Validate,
+  ValidateInput,
+  InputListElement,
+  Error,
+} from "./styles";
 
-export function Form(props) {
+export function Form({ error, setError, form, step, isValueValid }) {
   const data = useContext(AppContext);
   const getSelectType = () =>
-    props.form.option && props.form.option["multiple-choice"]
-      ? "checkbox"
-      : "radio";
+    form.option && form.option["multiple-choice"] ? "checkbox" : "radio";
   const onChange = e => {
-    if (props.form.type === "select" && getSelectType() === "checkbox") {
-      // If multiple choice true but it never happen
+    setError("");
+    if (form.type === "select" && getSelectType() === "checkbox") {
+      // If multiple choice true but it never happens
     } else {
       const newData = {};
-      newData[props.step] =
-        props.form.type === "select"
-          ? e.target.value
-          : parseInt(e.target.value, 10);
+      newData[step] =
+        form.type === "select" ? e.target.value : parseInt(e.target.value, 10);
+      isValueValid(!!newData[step] || newData[step] === 0);
       data.setData(newData);
     }
   };
+
   return (
-    <div>
-      <h4>
-        {props.form.type === "select"
-          ? props.form.label
-          : props.form.data[0].label}
-      </h4>
+    <FormWrapper>
+      <h4>{form.type === "select" ? form.label : form.data[0].label}</h4>
       <SurveyList>
-        {props.form.data.map((input, key) => (
+        {form.data.map((input, key) => (
           <label>
-            {props.form.type === "select" ? (
+            {form.type === "select" ? (
               <SurveyElement
                 key={key}
-                className={data[props.step] === input.value ? "active" : ""}
+                className={(() => {
+                  if (error) return "error";
+                  if (data[step] === input.value) return "active";
+                })()}
               >
                 {input.label}
                 <Select
                   onChange={onChange}
                   data={data}
-                  step={props.step}
+                  step={step}
                   input={input}
                   getSelectType={getSelectType}
                 />
+                <ValidateSelect visible={data[step] === input.value}>
+                  <Validate />
+                </ValidateSelect>
               </SurveyElement>
             ) : (
-              <InputText
-                onChange={onChange}
-                data={data}
-                step={props.step}
-                input={input}
-                form={props.form}
-              />
+              <InputListElement>
+                <InputValue
+                  onChange={onChange}
+                  data={data}
+                  step={step}
+                  input={input}
+                  form={form}
+                />
+                <ValidateSelect visible={!!data[step] || data[step] === 0}>
+                  <ValidateInput />
+                </ValidateSelect>
+              </InputListElement>
             )}
           </label>
         ))}
       </SurveyList>
-    </div>
+      <Error>{error}</Error>
+    </FormWrapper>
   );
 }
 export default Form;

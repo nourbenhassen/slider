@@ -1,8 +1,9 @@
 import React from "react";
+import { InputValueElement } from "../styles";
 
-export function InputText({ onChange, form, step, data }) {
+export function InputValue({ onChange, form, step, data }) {
   return (
-    <input
+    <InputValueElement
       value={typeof data[step] === "number" && data[step]}
       onChange={onChange}
       type="number"

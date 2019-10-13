@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Container } from "./components/styles";
 import ErrorBoundary from "./ErrorBoundary";
 import Slide from "./components/Slide";
 import Submit from "./components/Submit";
 
-export const AppContext = React.createContext({}); // Creation du context
+export const AppContext = React.createContext({}); // Creation of the context
 
 class App extends React.Component {
   state = {
@@ -15,7 +16,7 @@ class App extends React.Component {
       salaire: null,
     },
   };
-
+  // useEffect can be used instead of componentDidMount
   componentDidMount() {
     fetch("/api/questionnaire")
       .then(responsePromise => responsePromise.json())
@@ -32,7 +33,7 @@ class App extends React.Component {
     return (
       <ErrorBoundary>
         {survey ? (
-          <div className="container">
+          <Container>
             {/* Context Provider (Tous les enfants ont accès à ce context) */}
             <AppContext.Provider
               value={{ ...this.state.data, setData: this.setData }}
@@ -52,7 +53,7 @@ class App extends React.Component {
                 </Switch>
               </BrowserRouter>
             </AppContext.Provider>
-          </div>
+          </Container>
         ) : (
           <div>Loading...</div>
         )}
