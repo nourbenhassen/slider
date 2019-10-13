@@ -1,48 +1,62 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import ErrorBoundary from "./ErrorBoundary"
-import Slide from "./components/Slide"
-import Submit from "./components/Submit"
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import ErrorBoundary from "./ErrorBoundary";
+import Slide from "./components/Slide";
+import Submit from "./components/Submit";
+
+export const AppContext = React.createContext({}); // Creation du context
 
 class App extends React.Component {
   state = {
-    data: null
-  }
+    survey: null,
+    data: {
+      status: null,
+      age: null,
+      salaire: null,
+    },
+  };
 
   componentDidMount() {
     fetch("/api/questionnaire")
       .then(responsePromise => responsePromise.json())
-      .then(response => this.setState({data: response}))
+      .then(response => this.setState({ survey: response }))
       .catch(err => {
-        console.error(err)
-      })
+        console.error(err);
+      });
   }
-
-
+  setData = newData => {
+    this.setState({ data: { ...this.state.data, ...newData } });
+  };
   render() {
-    const { data } = this.state
+    const { survey } = this.state;
     return (
       <ErrorBoundary>
-      { data ? 
-    
+        {survey ? (
+          <div className="container">
+            {/* Context Provider (Tous les enfants ont accès à ce context) */}
+            <AppContext.Provider
+              value={{ ...this.state.data, setData: this.setData }}
+            >
               <BrowserRouter>
-                <div className="container">
-    
-                <Route
-                    exact path='/'
-                    render={() => ( <Slide survey={data} /> )}
-                 /> 
-                 <Route
-                    exact path='/submit'
-                    render={() => ( <Submit survey={data} /> )}
-                 />  
-                </div>
-              </BrowserRouter> 
-    
-      :<div>Loading...</div>
-      }
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={() => <Slide survey={survey} />}
+                  />
+                  <Route
+                    exact
+                    path="/submit"
+                    render={() => <Submit survey={survey} />}
+                  />
+                </Switch>
+              </BrowserRouter>
+            </AppContext.Provider>
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
       </ErrorBoundary>
-
     );
   }
 }

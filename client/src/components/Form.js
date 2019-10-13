@@ -1,34 +1,66 @@
-import React from "react"
+import React, { useContext } from "react";
+import { AppContext } from "../App";
+import { InputText } from "./form/InputText";
+import { Select } from "./form/Select";
+import { SurveyList, SurveyElement } from "./styles";
 
 export function Form(props) {
-    console.log(props)
-    const getSelectType = () => props.form.option && props.form.option["multiple-choice"] ? "checkbox" : "radio" 
-    const onChange = (e) => {
-        if (props.form.type === "select" && getSelectType() === "checkbox") {
-            // If multiple choice true
-        } else {
-            const newData = {...props.data};
-            newData[props.step] = props.form.type === "select" ? e.target.value : parseInt(e.target.value, 10)
-            props.setData(newData)
-        }
+  const data = useContext(AppContext);
+  const getSelectType = () =>
+    props.form.option && props.form.option["multiple-choice"]
+      ? "checkbox"
+      : "radio";
+  const onChange = e => {
+    if (props.form.type === "select" && getSelectType() === "checkbox") {
+      // If multiple choice true but it never happen
+    } else {
+      const newData = {};
+      newData[props.step] =
+        props.form.type === "select"
+          ? e.target.value
+          : parseInt(e.target.value, 10);
+      data.setData(newData);
     }
-    return (
-        <div>
-            <h4>{props.form.type === "select" ? props.form.label : props.form.data[0].label}</h4>
-            {props.form.data.map((input, key) =>
-                <label key={key}>{props.form.type === "select" && input.label}
-                    <input value={props.form.type === "select" ? input.value : typeof props.data[props.step] === "number" && props.data[props.step]}
-                        checked={props.form.type === "select" && props.data[props.step] === input.value ? true : undefined}
-                        onChange={onChange}
-                        name={props.form.type === "select" ? "select-group" : undefined}
-                        type={props.form.type === "select" ? getSelectType() : "number"}
-                        min={props.form.type === "input" ? (props.form.option.min || 0) : undefined}
-                        max={props.form.type === "input" ? props.form.option.max : undefined}
-                        />
-                </label>
+  };
+  return (
+    <div>
+      <h4>
+        {props.form.type === "select"
+          ? props.form.label
+          : props.form.data[0].label}
+      </h4>
+      <SurveyList>
+        {props.form.data.map((input, key) => (
+          <label>
+            {props.form.type === "select" ? (
+              <SurveyElement
+                key={key}
+                className={data[props.step] === input.value ? "active" : ""}
+              >
+                {input.label}
+                <Select
+                  onChange={onChange}
+                  data={data}
+                  step={props.step}
+                  input={input}
+                  getSelectType={getSelectType}
+                />
+              </SurveyElement>
+            ) : (
+              <InputText
+                onChange={onChange}
+                data={data}
+                step={props.step}
+                input={input}
+                form={props.form}
+              />
             )}
-        </div>)
+          </label>
+        ))}
+      </SurveyList>
+    </div>
+  );
 }
-export default Form
+export default Form;
 
 // Object.assign(source, target) === {...source, target}
