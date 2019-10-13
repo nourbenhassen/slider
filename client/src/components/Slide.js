@@ -3,12 +3,13 @@ import Form from "./Form";
 import ProgressBar from "./progress-bar/ProgressBar";
 import {
   SlideWrapper,
-  Arrow,
-  ArrowWrapper,
+  ArrowLeft,
+  ArrowRight,
+  ArrowLeftWrapper,
+  ArrowRightWrapper,
   ArrowContainer,
   ButtonWrap,
   Button,
-  Error,
 } from "./styles";
 import { AppContext } from "../App";
 
@@ -51,9 +52,9 @@ export function Slide(props) {
       <ProgressBar position={position} stepsName={stepsName} />
       <SlideWrapper>
         <ArrowContainer>
-          <ArrowWrapper onClick={() => prevStep()} visible={position !== 1}>
-            <Arrow style={{ width: 20 }} />
-          </ArrowWrapper>
+          <ArrowLeftWrapper onClick={() => prevStep()} visible={position !== 1}>
+            <ArrowLeft style={{ width: 20 }} />
+          </ArrowLeftWrapper>
         </ArrowContainer>
         <Form
           isValueValid={isValueValid}
@@ -70,14 +71,14 @@ export function Slide(props) {
           setError={setError}
         />
         <ArrowContainer>
-          <ArrowWrapper
+          <ArrowRightWrapper
             reversed={true}
             onClick={() => nextStep()}
             visible={position !== lastPosition}
             valid={valid}
           >
-            <Arrow style={{ width: 20 }} />
-          </ArrowWrapper>
+            <ArrowRight style={{ width: 20 }} />
+          </ArrowRightWrapper>
         </ArrowContainer>
       </SlideWrapper>
       <ButtonWrap>

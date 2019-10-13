@@ -34,7 +34,7 @@ class App extends React.Component {
       <ErrorBoundary>
         {survey ? (
           <Container>
-            {/* Context Provider (Tous les enfants ont accès à ce context) */}
+            {/* Context Provider (All children have access to this context) */}
             <AppContext.Provider
               value={{ ...this.state.data, setData: this.setData }}
             >

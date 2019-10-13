@@ -1,11 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-// export const FormWrapper = styled.div`
-//   width: 50%;
-//   margin: auto;
-// `;
-
 export const FormWrapper = styled.div`
   max-width: 500px;
   margin-top: 60px;
@@ -38,8 +33,8 @@ export const SurveyElement = styled.li`
     color: white;
   }
   &.error {
-    background-color: red;
+    background-color: #ffdfdf;
     border-color: red;
-    color: white;
+    color: black;
   }
 `;

@@ -16,10 +16,10 @@ export const Button = styled(Link)`
   height: 20px;
   text-align: center;
   padding-top: 10px;
-  border: 1px orange solid;
+  border: 1px ${props => (props.disabled ? "gray" : "orange")} solid;
   background-color: ${props => (props.disabled ? "gray" : "white")};
   border-radius: 7px;
-  color: orange;
+  color: ${props => (props.disabled ? "white" : "orange")};
   &:hover {
     background-color: orange;
     color: white;
