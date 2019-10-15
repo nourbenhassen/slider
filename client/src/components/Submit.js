@@ -30,24 +30,18 @@ export function Submit(props) {
       <SubmitTable>
         {stepsName.map((stepName, i) => (
           <tr>
-            <td>{capitalizeFirstLetter(stepName)}</td>
-            <td>{data[stepName]}</td>
+            <td style={{ fontWeight: "bold" }}>
+              {capitalizeFirstLetter(stepName)}
+            </td>
+            <td>
+              {stepName == "age"
+                ? data[stepName] + " ans"
+                : stepName == "salaire"
+                ? data[stepName] + "€"
+                : data[stepName]}{" "}
+            </td>
           </tr>
         ))}
-        {/*
-          <tr>
-          <td>Statut</td>
-          <td>{data.status}</td>
-        </tr>
-        <tr>
-          <td>Age</td>
-          <td>{data.age}</td>
-        </tr>
-        <tr>
-          <td>Salaire</td>
-          <td>{data.salaire}</td>
-        </tr>
-       */}
       </SubmitTable>
     </SubmitTableWrapper>
   );

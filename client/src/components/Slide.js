@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Form from "./Form";
 import ProgressBar from "./progress-bar/ProgressBar";
 import {
@@ -41,6 +41,22 @@ export function Slide(props) {
       setError("");
     } else setError("Champ obligatoire");
   };
+
+  const handleUserKeyPress = event => {
+    if (event.key === "Enter" || event.keyCode === 39) {
+      nextStep();
+    } else if (event.keyCode == 37) {
+      prevStep();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleUserKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleUserKeyPress);
+    };
+  });
 
   const stepsName = [];
   for (let [key, question] of Object.entries(survey)) {

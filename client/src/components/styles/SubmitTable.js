@@ -2,17 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 export const SubmitTable = styled.table`
-  border: 1px solid orange;
-  background-color: #eeeeee;
+  border-radius: 7px;
+  background-color: #acacac;
   width: 60%;
-  margin: auto;
+  margin: 50px auto;
   text-align: center;
   border-collapse: collapse;
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  tr {
+    height: 60px;
+  }
 `;
 
 export const SubmitTableWrapper = styled.table`
-  width: 50%
-  margin:auto;
+margin: 50px auto;
+width: 50%
   text-align: center;
   font-size: 20px;
 `;
