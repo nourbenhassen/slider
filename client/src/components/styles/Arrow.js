@@ -14,7 +14,7 @@ export const ArrowRightWrapper = styled.div`
   width: 70px;
   height: 70px;
   border-radius: 100%;
-  background-color: ${props => (props.valid ? "orange" : "gray")};
+  background-color: ${props => (props.valid ? "orange" : "#c8c8c8")};
   position: relative;
   cursor: pointer;
   transform: ${props => (props.reversed ? "rotate(180deg)" : "")};

@@ -28,9 +28,12 @@ export function Slide(props) {
   // calculer dynamiquement ?
   const lastPosition = 3;
 
+  //Go back to previous slide
   const prevStep = () => {
     if (position > 1) setPosition(position - 1);
   };
+
+  //Go to next slide
   const nextStep = () => {
     if (
       position < lastPosition &&
@@ -42,10 +45,11 @@ export function Slide(props) {
     } else setError("Champ obligatoire");
   };
 
+  // keyPress Enter or nextarrow to go to next slide
   const handleUserKeyPress = event => {
     if (event.key === "Enter" || event.keyCode === 39) {
       nextStep();
-    } else if (event.keyCode == 37) {
+    } else if (event.keyCode === 37) {
       prevStep();
     }
   };

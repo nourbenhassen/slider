@@ -1,6 +1,6 @@
 import React from "react";
 import PartialProgressBar from "./PartialProgressBar";
-import { Tracker, ProgressInTracker, StepList, Dot } from "../styles";
+import { Tracker, StepList } from "../styles";
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -40,5 +40,3 @@ export function ProgressBar({ position, stepsName }) {
   );
 }
 export default ProgressBar;
-
-// Object.assign(source, target) === {...source, target}

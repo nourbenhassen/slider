@@ -4,7 +4,6 @@ import { ReactComponent as ValidateSvg } from "../../assets/validate.svg";
 
 export const InputListElement = styled.li`
   position: relative;
-
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;

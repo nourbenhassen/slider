@@ -9,11 +9,13 @@ export const StepList = styled.ul`
   justify-content: space-around;
 `;
 
-export const ProgressInTracker = styled.div`
-  background: orange;
-  border: orange;
+export const ProgressInBar = styled.div`
+  background: red;
+  border: #ff9000;
   height: 100%;
-  width: ${props => props.percentage}%;
+  width: 50%%
+  position: absolute;
+  z-index: 2;
 `;
 
 export const Tracker = styled.div`
@@ -22,25 +24,25 @@ export const Tracker = styled.div`
 
 export const Bar = styled.div`
   background: ${props =>
-    `linear-gradient(90deg, rgba(255,116,0,1), rgba(255,116,0,${
+    `linear-gradient(90deg, rgba(255,144,0,1), rgba(255,144,0,${
       props.percent === 100 ? "1" : "0"
     }) ${props.percent}%)`};
-  border: ${props => (props.filled ? "#FF7400" : "")};
+  border: ${props => (props.filled ? "#FF9000" : "")};
   height: 5px;
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid #c8c8c8;
   border-radius: 5px;
   position: relative;
 `;
 
 export const Dot = styled.div`
-  background: ${props => (props.filled ? "#FF7400" : "white")};
+  background-color: ${props => (props.filled ? "#FF9000" : "white")};
   z-index: 1;
-  height: 12px;
-  width: 12px;
-  top: -4px;
+  height: 15px;
+  width: 15px;
+  top: -6px;
   position: absolute;
   right: -8px;
-  border: 1px solid black;
+  border: 1px solid ${props => (props.filled ? "#FF9000" : "#c8c8c8")};
   border-radius: 100%;
 `;

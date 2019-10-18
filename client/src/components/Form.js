@@ -20,7 +20,7 @@ export function Form({ error, setError, form, step, isValueValid }) {
   const onChange = e => {
     setError("");
     if (form.type === "select" && getSelectType() === "checkbox") {
-      // If multiple choice true but it never happens
+      // If multiple choice true
     } else {
       const newData = {};
       newData[step] =
@@ -52,7 +52,7 @@ export function Form({ error, setError, form, step, isValueValid }) {
                   input={input}
                   getSelectType={getSelectType}
                 />
-                <ValidateSelect visible={data[step] === input.value}>
+                <ValidateSelect visible={data[step] === input.label}>
                   <Validate />
                 </ValidateSelect>
               </SurveyElement>

@@ -34,9 +34,9 @@ export function Submit(props) {
               {capitalizeFirstLetter(stepName)}
             </td>
             <td>
-              {stepName == "age"
+              {stepName === "age"
                 ? data[stepName] + " ans"
-                : stepName == "salaire"
+                : stepName === "salaire"
                 ? data[stepName] + "€"
                 : data[stepName]}{" "}
             </td>
