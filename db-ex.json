@@ -55,18 +55,17 @@
         "max": 300000
       }
     },
-    "Taille": {
+    "aa": {
       "position": 4,
       "type": "input",
       "data": [
         {
-          "label": "Quelle est votre taille?",
-          "value": "taille"
+          "label": "A combien estimez-vous environ les revenus mensuels nets de votre foyer ?",
+          "value": "salary"
         }
       ],
       "option": {
-        "min": 100,
-        "max": 250
+        "max": 300000
       }
     }
   }

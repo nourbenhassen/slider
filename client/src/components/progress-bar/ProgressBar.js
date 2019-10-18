@@ -6,7 +6,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function ProgressBar({ position, stepsName }) {
+export function ProgressBar({ position, survey }) {
   const getPercent = index => {
     if (position === index) {
       return 90;
@@ -19,17 +19,17 @@ export function ProgressBar({ position, stepsName }) {
   return (
     <>
       <StepList>
-        {stepsName.map((stepName, i) => (
-          <>
-            <li>{capitalizeFirstLetter(stepName)}</li>
-          </>
+        {survey.map((surveyItem, i) => (
+          <li key={surveyItem.position}>
+            {capitalizeFirstLetter(surveyItem.name)}
+          </li>
         ))}
       </StepList>
       <Tracker>
-        {stepsName.map((stepName, i) => (
+        {survey.map((surveyItem, i) => (
           <>
             <PartialProgressBar
-              isLast={position === stepsName.length}
+              isLast={position === survey.length}
               percent={getPercent(i + 1)}
               filled={position - 1 > i}
             />

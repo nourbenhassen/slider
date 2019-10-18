@@ -26,19 +26,21 @@ export function Slide(props) {
     setValid(isValueValid);
   };
   // calculer dynamiquement ?
-  const lastPosition = 3;
+  const lastPosition = survey.length;
 
   //Go back to previous slide
   const prevStep = () => {
     if (position > 1) setPosition(position - 1);
   };
 
+  //function is Next step valid or not
+  function isNextStepValid() {
+    if (!data[position - 1]) return false;
+    return true;
+  }
   //Go to next slide
   const nextStep = () => {
-    if (
-      position < lastPosition &&
-      ((position === 1 && data.status) || (position === 2 && data.age))
-    ) {
+    if (isNextStepValid()) {
       setPosition(position + 1);
       setValid(false);
       setError("");
@@ -62,31 +64,19 @@ export function Slide(props) {
     };
   });
 
-  const stepsName = [];
-  for (let [key, question] of Object.entries(survey)) {
-    stepsName[question.position - 1] = key;
-  }
-
   return (
     <>
-      <ProgressBar position={position} stepsName={stepsName} />
+      <ProgressBar position={position} survey={survey} />
       <SlideWrapper>
         <ArrowContainer>
-          <ArrowLeftWrapper onClick={() => prevStep()} visible={position !== 1}>
+          <ArrowLeftWrapper onClick={prevStep} visible={position !== 1}>
             <ArrowLeft style={{ width: 20 }} />
           </ArrowLeftWrapper>
         </ArrowContainer>
         <Form
           isValueValid={isValueValid}
-          ref={form => (this.myForm = form)}
-          form={
-            survey[
-              Object.keys(survey).find(key => survey[key].position === position)
-            ]
-          }
-          step={Object.keys(survey).find(
-            key => survey[key].position === position,
-          )}
+          form={survey[position - 1]}
+          position={position}
           error={error}
           setError={setError}
         />
@@ -105,7 +95,7 @@ export function Slide(props) {
         <Button
           to="/submit"
           visible={position === lastPosition}
-          disabled={!data.salaire}
+          disabled={!data[lastPosition - 1]}
         >
           Submit
         </Button>

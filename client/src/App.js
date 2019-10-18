@@ -10,23 +10,34 @@ export const AppContext = React.createContext({}); // Creation of the context
 class App extends React.Component {
   state = {
     survey: null,
-    data: {
-      status: null,
-      age: null,
-      salaire: null,
-    },
+    data: [],
+    error: "",
   };
-  // useEffect can be used instead of componentDidMount
   componentDidMount() {
     fetch("/api/questionnaire")
       .then(responsePromise => responsePromise.json())
-      .then(response => this.setState({ survey: response }))
+      .then(response => {
+        const survey = Object.keys(response)
+          .map(key => {
+            response[key].name = key;
+            return response[key];
+          })
+          .sort((a, b) => a.position < b.position);
+        this.setState({
+          survey,
+        });
+      })
       .catch(err => {
-        console.error(err);
+        this.setState({ err: err });
       });
+    console.log("data", this.state.data);
   }
-  setData = newData => {
-    this.setState({ data: { ...this.state.data, ...newData } });
+  setData = (newData, index) => {
+    console.log("ND", newData);
+    const { data } = this.state;
+    const newState = [...data];
+    newState[index] = newData;
+    this.setState({ data: newState });
   };
   render() {
     const { survey } = this.state;

@@ -13,8 +13,9 @@ import {
   Error,
 } from "./styles";
 
-export function Form({ error, setError, form, step, isValueValid }) {
+export function Form({ error, setError, form, isValueValid, position }) {
   const data = useContext(AppContext);
+  console.log(form, position, data);
   const getSelectType = () =>
     form.option && form.option["multiple-choice"] ? "checkbox" : "radio";
   const onChange = e => {
@@ -22,11 +23,10 @@ export function Form({ error, setError, form, step, isValueValid }) {
     if (form.type === "select" && getSelectType() === "checkbox") {
       // If multiple choice true
     } else {
-      const newData = {};
-      newData[step] =
-        form.type === "select" ? e.target.value : parseInt(e.target.value, 10);
-      isValueValid(!!newData[step] || newData[step] === 0);
-      data.setData(newData);
+      const newData =
+        form.type === "input" ? parseInt(e.target.value) : e.target.value;
+      isValueValid(!!newData || newData === 0);
+      data.setData(newData, position - 1); //setData is Coming from context
     }
   };
 
@@ -41,18 +41,18 @@ export function Form({ error, setError, form, step, isValueValid }) {
                 key={key}
                 className={(() => {
                   if (error) return "error";
-                  if (data[step] === input.value) return "active";
+                  if (data[position - 1] === input.value) return "active";
                 })()}
               >
                 {input.label}
                 <Select
                   onChange={onChange}
                   data={data}
-                  step={step}
+                  position={position}
                   input={input}
                   getSelectType={getSelectType}
                 />
-                <ValidateSelect visible={data[step] === input.label}>
+                <ValidateSelect visible={data[position - 1] === input.label}>
                   <Validate />
                 </ValidateSelect>
               </SurveyElement>
@@ -61,11 +61,13 @@ export function Form({ error, setError, form, step, isValueValid }) {
                 <InputValue
                   onChange={onChange}
                   data={data}
-                  step={step}
+                  position={position}
                   input={input}
                   form={form}
                 />
-                <ValidateSelect visible={!!data[step] || data[step] === 0}>
+                <ValidateSelect
+                  visible={!!data[position - 1] || data[position - 1] === 0}
+                >
                   <ValidateInput />
                 </ValidateSelect>
               </InputListElement>
